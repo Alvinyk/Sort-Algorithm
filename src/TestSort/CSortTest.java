@@ -43,5 +43,12 @@ public class CSortTest {
 		
 		assertArrayEquals(arrEp,array);
 	}
+	@Test
+	public void testDirectedBubbleSort()
+	{
+		sort.DirectedBubbleSort(array);
+		
+		assertArrayEquals(arrEp,array);
+	}
 
 }

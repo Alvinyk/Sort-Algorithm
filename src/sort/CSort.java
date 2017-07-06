@@ -56,5 +56,33 @@ public class CSort {
 		}
 	}
 
+	public void DirectedBubbleSort(int[] array) {
+		// TODO Auto-generated method stub
+		int n = array.length;
+		int left = 0; 
+		int right = n-1;
+		while(left < right)
+		{
+			for(int i = left;i<right;i++)
+			{
+				if(array[i] > array[i+1])
+				{
+					exchange(array,i,i+1);
+				}
+			}
+			right--;
+			
+			for(int i = right; i>left;i--)
+			{
+				if(array[i] < array[i-1])
+				{
+					exchange(array,i,i-1);
+				}
+			}
+			left++;
+		}
+
+	}
+
 	
 }
