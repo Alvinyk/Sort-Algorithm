@@ -2,6 +2,8 @@ package TestSort;
 
 import static org.junit.Assert.*;
 
+import java.util.Arrays;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,16 +17,14 @@ import sort.CSort;
 */
 public class CSortTest {
 
-	CSort sort = new CSort();
-	private int[] array = null;
-	private int[] arrEp = null;
-	private final int n = 100;
+	private final int n = 1000;
+	
+	private int[] array = new int[n];
+	private int[] arrEp = new int[n];
+	private CSort sort = new CSort();
 	
 	@Before
 	public void setUp() throws Exception {
-		
-		array = new int[n];
-		arrEp = new int[n];
 		
 		for(int i = 0; i < n ;i++)
 		{
@@ -37,6 +37,7 @@ public class CSortTest {
 	public void tearDown() throws Exception {
 	}
 
+	
 	@Test
 	public void testBubbleSort() {
 		sort.BubbleSort(array);
@@ -51,4 +52,36 @@ public class CSortTest {
 		assertArrayEquals(arrEp,array);
 	}
 
+	@Test
+	public void testInsertSort()
+	{
+		sort.InsertSort(array);
+		
+		assertArrayEquals(arrEp,array);
+	}
+	
+	@Test
+	public void testBinaryInsertSort()
+	{
+		sort.BinaryInsertSort(array);
+		
+		assertArrayEquals(arrEp,array);
+	}
+	
+	@Test
+	public void testShellSort()
+	{
+		
+		sort.ShellSort(array);
+		
+		assertArrayEquals(arrEp,array);
+	}
+	
+	@Test
+	public void testMergeSort()
+	{
+		sort.MergeSort(array);
+		
+		assertArrayEquals(arrEp,array);
+	}
 }
