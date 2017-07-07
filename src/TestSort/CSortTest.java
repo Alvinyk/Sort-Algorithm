@@ -2,7 +2,9 @@ package TestSort;
 
 import static org.junit.Assert.*;
 
-import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Random;
+import java.util.Set;
 
 import org.junit.After;
 import org.junit.Before;
@@ -17,7 +19,7 @@ import sort.CSort;
 */
 public class CSortTest {
 
-	private final int n = 1000;
+	private final int n = 10;
 	
 	private int[] array = new int[n];
 	private int[] arrEp = new int[n];
@@ -25,11 +27,25 @@ public class CSortTest {
 	
 	@Before
 	public void setUp() throws Exception {
+		Random rand = new Random(47);
 		
-		for(int i = 0; i < n ;i++)
+		Set<Integer> set = new HashSet<>();
+		
+		int i = 0;
+		while(set.size() != n)
 		{
-			array[i] = n-i;
-			arrEp[i] = i+1;
+			int num = rand.nextInt(n);
+			if(set.contains(num) == false)
+			{
+				set.add(num);
+				array[i++] = num;
+			}
+			
+		}
+		
+		for(i = 0; i < n ;i++)
+		{
+			arrEp[i] = i;
 		}
 	}
 
@@ -81,6 +97,22 @@ public class CSortTest {
 	public void testMergeSort()
 	{
 		sort.MergeSort(array);
+		
+		assertArrayEquals(arrEp,array);
+	}
+	
+	@Test
+	public void testHeapSort()
+	{
+		sort.HeapSort(array);
+		
+		assertArrayEquals(arrEp,array);
+	}
+	
+	@Test
+	public void testQuickSort()
+	{
+		sort.QuickSort(array);
 		
 		assertArrayEquals(arrEp,array);
 	}

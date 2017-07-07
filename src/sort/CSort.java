@@ -1,6 +1,9 @@
 package sort;
 
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Random;
+import java.util.Set;
 
 /** 
 * @author : 
@@ -9,29 +12,41 @@ import java.util.Arrays;
 */
 public class CSort {
 
-	private static final int n = 10;
+	private static final int n =10;
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		CSort sort = new CSort();
 		int[] A = new int[n];
-		for(int i = 0 ;i<n;i++)
+		int i = 0;
+		Random rand = new Random(47);
+		
+		Set<Integer> set = new HashSet<>();
+		while(set.size() != n)
 		{
-			A[i] = n-i;
+			int num = rand.nextInt(n);
+			if(set.contains(num) == false)
+			{
+				set.add(num);
+				A[i++] = num;
+			}
+			
 		}
 		
-
 		System.out.println(Arrays.toString(A));
 		
 		//sort.BubbleSort(A);
-		sort.MergeSort(A);
+		//sort.MergeSort(A);
+		//sort.HeapSort(A);
+		//sort.QuickSort(A);
+		sort.BinaryInsertSort(A);
 		System.out.println(Arrays.toString(A));
 		
 	}
 	
 
 	
-	public void exchange(int[] A, int i,int j)
+	private void Swap(int[] A, int i,int j)
 	{
 		int temp = A[i];
 		A[i] = A[j];
@@ -48,7 +63,7 @@ public class CSort {
 			{
 				if(array[j] > array[j+1])
 				{
-					exchange(array,j,j+1);
+					Swap(array,j,j+1);
 				}
 			}
 		}
@@ -65,7 +80,7 @@ public class CSort {
 			{
 				if(array[i] > array[i+1])
 				{
-					exchange(array,i,i+1);
+					Swap(array,i,i+1);
 				}
 			}
 			right--;
@@ -74,7 +89,7 @@ public class CSort {
 			{
 				if(array[i] < array[i-1])
 				{
-					exchange(array,i,i-1);
+					Swap(array,i,i-1);
 				}
 			}
 			left++;
@@ -109,8 +124,8 @@ public class CSort {
 		{
 			temp = array[i];
 			left = 0;
-			right = i -1;
-			while(left < right)
+			right = i-1;
+			while(left <= right)
 			{
 				middle = (left + right)/2;
 				if(array[middle] > temp)
@@ -127,6 +142,7 @@ public class CSort {
 				array[j] = array[j-1];
 			}
 			array[left] = temp;
+			
 		}
 	}
 
@@ -207,5 +223,87 @@ public class CSort {
 		}
 		
 	}
+
+
+
+	public void HeapSort(int[] array) {
+		// TODO Auto-generated method stub
+		int n = array.length;
+		
+		//构造堆结构
+		for(int i = n/2-1;i>=0;i--)
+		{
+			MaxHeapFixDown(array,i,n);
+		}
+		//排序
+		for(int i = n-1;i>0;i--)
+		{
+			Swap(array,0,i);
+			MaxHeapFixDown(array,0,i);
+		}
+	}
 	
+	private void MaxHeapFixDown(int[] A,int i,int n)
+	{
+		int j = i*2 + 1;
+		int temp = A[i];
+		
+		while(j < n)
+		{
+			if(j+1 < n && A[j+1] > A[j])
+				j++;
+			
+			if(A[j] <= temp)
+				break;
+			
+			A[i] = A[j];
+			i = j;
+			j = i*2 +1;
+		}
+		
+		A[i] = temp;
+		
+	}
+
+
+
+	public void QuickSort(int[] array) {
+		// TODO Auto-generated method stub
+		int n = array.length;
+		
+		quick(array,0,n-1);
+	}
+	
+	private void quick(int[]A,int left,int right)
+	{
+		int index = 0;
+		if(left < right)
+		{
+			index = partition(A,left,right);
+			
+			quick(A,left,index-1);
+			
+			quick(A,index+1,right);
+		}
+	}
+	
+	private int partition(int[] A,int left,int right)
+	{
+		int index = left -1;
+		int part = A[right];
+		
+		for(int i = left;i<right;i++)
+		{
+			if(A[i] <= part)
+			{
+				index++;
+				Swap(A,index,i);
+			}
+		}
+		
+		index++;
+		Swap(A,index,right);
+		
+		return index;
+	}
 }
