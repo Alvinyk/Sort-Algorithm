@@ -12,19 +12,19 @@ import java.util.Set;
 */
 public class CSort {
 
-	private static final int n =10;
+	private static final int Arrlen =10;
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		CSort sort = new CSort();
-		int[] A = new int[n];
+		int[] A = new int[Arrlen];
 		int i = 0;
 		Random rand = new Random(47);
 		
 		Set<Integer> set = new HashSet<>();
-		while(set.size() != n)
+		while(set.size() != Arrlen)
 		{
-			int num = rand.nextInt(n);
+			int num = rand.nextInt(Arrlen);
 			if(set.contains(num) == false)
 			{
 				set.add(num);
@@ -305,5 +305,74 @@ public class CSort {
 		Swap(A,index,right);
 		
 		return index;
+	}
+
+
+
+	public void CountSort(int[] A) {
+		// TODO Auto-generated method stub
+		CountingSort(A,-1);
+	}
+
+
+
+	public void RadixSort(int[] array) {
+		// TODO Auto-generated method stub
+		int n = array.length;
+		int temp  = n-1;
+		int dn = 0;
+		while(temp > 0)
+		{
+			dn++;
+			temp /= 10;
+		}
+		
+		for(int i =1;i<= dn;i++)
+		{
+			CountingSort(array,i);
+		}
+	}
+	
+	private void CountingSort(int[] A,int d) {
+		// TODO Auto-generated method stub
+		int n = A.length;
+		int k = n;
+		int c[] = new int[k];
+		
+		for(int i = 0; i<n;i++)
+		{
+			c[getdigit(A[i],d)]++;
+		}
+		
+		for(int i= 1; i<k;i++)
+		{
+			c[i]=c[i]+c[i-1];
+		}
+		
+		int temp[] = new int[n];
+		for(int i = n-1; i>=0 ;i--)
+		{
+			int j = getdigit(A[i],d);
+			temp[c[j]-1]=A[i];
+			c[j]--;
+		}
+		
+		System.arraycopy(temp, 0, A, 0, n);
+	}
+	
+	private int getdigit(int num,int d)
+	{
+		if(d == -1)
+		{
+			return num;
+		}
+		
+		int radix = 1;
+		for(int i=1;i<d;i++)
+		{
+			radix *= 10; 
+		}
+		
+		return (num / radix)%10;
 	}
 }

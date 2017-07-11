@@ -2,6 +2,7 @@ package TestSort;
 
 import static org.junit.Assert.*;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
@@ -19,7 +20,7 @@ import sort.CSort;
 */
 public class CSortTest {
 
-	private final int n = 10;
+	private final int n = 100;
 	
 	private int[] array = new int[n];
 	private int[] arrEp = new int[n];
@@ -27,7 +28,7 @@ public class CSortTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		Random rand = new Random(47);
+		Random rand = new Random();
 		
 		Set<Integer> set = new HashSet<>();
 		
@@ -42,7 +43,7 @@ public class CSortTest {
 			}
 			
 		}
-		
+		//System.out.println(Arrays.toString(array));
 		for(i = 0; i < n ;i++)
 		{
 			arrEp[i] = i;
@@ -53,6 +54,7 @@ public class CSortTest {
 	public void tearDown() throws Exception {
 	}
 
+	
 	
 	@Test
 	public void testBubbleSort() {
@@ -113,6 +115,23 @@ public class CSortTest {
 	public void testQuickSort()
 	{
 		sort.QuickSort(array);
+		
+		assertArrayEquals(arrEp,array);
+	}
+	
+	
+	@Test
+	public void testCountSort()
+	{
+		sort.CountSort(array);
+		
+		assertArrayEquals(arrEp,array);
+	}
+	
+	@Test
+	public void testRadixSort()
+	{
+		sort.RadixSort(array);
 		
 		assertArrayEquals(arrEp,array);
 	}
