@@ -20,7 +20,7 @@ import sort.CSort;
 */
 public class CSortTest {
 
-	private final int n = 100;
+	private final int n = 56890;
 	
 	private int[] array = new int[n];
 	private int[] arrEp = new int[n];
@@ -135,4 +135,24 @@ public class CSortTest {
 		
 		assertArrayEquals(arrEp,array);
 	}
+	public void testMapToBucket()
+	{
+		int index1 = sort.MapToBucket(10, 49, 5);
+		int index2 = sort.MapToBucket(13, 49, 4);
+		
+		assertEquals(1,index1);
+		assertEquals(1,index2);
+	}
+	
+	@Test
+	public void testBucketSort()
+	{
+		sort.BucketSort(array);
+		
+		assertArrayEquals(arrEp,array);
+		
+		
+	}
+	
+
 }

@@ -375,4 +375,68 @@ public class CSort {
 		
 		return (num / radix)%10;
 	}
+
+
+
+	public void BucketSort(int[] array) {
+		// TODO Auto-generated method stub
+		int bn = 10;
+		int bucket[] = new int[bn];
+		
+		int n = array.length;
+		int temp[] = new int[n];
+		
+		int max = array[0];
+		for(int i =1;i<n;i++)
+		{
+			if(array[i]>max){
+				max = array[i];
+			}
+		}
+		
+		for(int i = 0; i< n;i++)
+		{
+			int index = MapToBucket(array[i],max,bn);
+			bucket[index]++;
+		}
+		
+		//定位每个桶的右边界索引 bucket[i]-1 为i号桶中最后一个元素下标
+		for(int i = 1;i<bn;i++)
+		{
+			bucket[i] = bucket[i] + bucket[i-1];
+		}
+		
+		for(int i = n-1;i>= 0;i--)
+		{
+			int j = MapToBucket(array[i],max,bn);
+			temp[bucket[j]-1] = array[i];
+			bucket[j]--;
+		}
+		
+		//通过上一步赋值 bucket[0] = 0;bucket[bn-1] != n
+
+		int left = 0,right = 0;
+		for(int i=0;i<bn;i++)
+		{
+			left = bucket[i];
+			right = (i== bn-1 ? n-1 :bucket[i+1]-1);
+			if(left < right)
+			{
+				quick(temp,left,right);
+			}
+				
+		}
+
+		System.arraycopy(temp, 0, array, 0, n);
+	}
+	
+	public int MapToBucket(int num,int max,int bn)
+	{
+		int size = 0;
+		if((max+1)%bn == 0)
+			size = (max+1)/bn;
+		else
+			size = (max+1)/bn + 1;
+		return num / size; 
+	}
 }
