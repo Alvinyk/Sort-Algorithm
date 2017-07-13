@@ -135,6 +135,8 @@ public class CSortTest {
 		
 		assertArrayEquals(arrEp,array);
 	}
+	
+	@Test
 	public void testMapToBucket()
 	{
 		int index1 = sort.MapToBucket(10, 49, 5);
